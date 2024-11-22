@@ -22,9 +22,9 @@ sym_spell.load_dictionary(dictionary_path, term_index, count_index)
 
 
 # Load encoders and vectorizer
-category_encoder = joblib.load('category_encoder.pkl')
-subcategory_encoder = joblib.load('subcategory_encoder.pkl')
-tfidf_vectorizer = joblib.load('TFIDF_vectorizer.pkl')
+category_encoder = joblib.load('./Model_Weights/category_encoder.pkl')
+subcategory_encoder = joblib.load('./Model_Weights/subcategory_encoder.pkl')
+tfidf_vectorizer = joblib.load('./Model_Weights/TFIDF_vectorizer.pkl')
 
 # Domain entities dictionary
 domain_entities = {
@@ -77,8 +77,8 @@ def predict_complaint():
     selected_model = model_choice.get()
     if selected_model == "LGBM":
         # Load models
-        subcategory_model = joblib.load('LGBM_subcategory_model.pkl')
-        category_model = joblib.load('LGBM_category_model.pkl')
+        subcategory_model = joblib.load('./Model_Weights/LGBM_subcategory_model.pkl')
+        category_model = joblib.load('./Model_Weights/LGBM_category_model.pkl')
 
         # Predict subcategory
         subcategory_pred = subcategory_model.predict(complaint_tfidf)
@@ -90,8 +90,8 @@ def predict_complaint():
         category_name = category_encoder.inverse_transform(category_pred)[0]
     elif selected_model == "LSTM":
         # Load models
-        subcategory_model = load_model('LSTM_subcategory_model.h5')
-        category_model = load_model('LSTM_category_model.h5')
+        subcategory_model = load_model('./Model_Weights/LSTM_subcategory_model.h5')
+        category_model = load_model('./Model_Weights/LSTM_category_model.h5')
 
         # Predict subcategory
         subcategory_proba = subcategory_model.predict(complaint_tfidf.toarray())
